@@ -1,10 +1,13 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import axios from "axios";
 import { useCallback, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { User } from "../types/api/user";
+import { useMessage } from "./useMessage";
 
 export const useAuth = () => {
   const history = useHistory();
+  const { showMessage } = useMessage();
 
   const [loading, setLoading] = useState(false);
 
@@ -16,15 +19,16 @@ export const useAuth = () => {
         .get<User>(`https://jsonplaceholder.typicode.com/users/${id}`)
         .then((res) => {
           if (res.data) {
+            showMessage({ title: "We are done!", status: "success" });
             history.push("/home");
           } else {
-            alert("Users are not found");
+            showMessage({ title: "We cannot find you...", status: "error" });
           }
         })
-        .catch(() => alert("Cannot login"))
+        .catch(() => 
+        showMessage({ title: "We cannot login...", status: "error" }));
         .finally(() => setLoading(false));
     },
-    [history]
-  );
+    []);
   return { login, loading };
 };
