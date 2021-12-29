@@ -6,15 +6,15 @@ import { Center, Wrap, WrapItem } from "@chakra-ui/layout";
 import { Spinner } from "@chakra-ui/spinner";
 import { memo, useCallback, useEffect, VFC } from "react";
 
-import { useAllUsers } from "../../hooks/useAllUsers";
-import { useSelectUser } from "../../hooks/useSelectUser";
+import { UseAllUsers } from "../../hooks/useAllUsers";
+import { UseSelectUser } from "../../hooks/useSelectUser";
 import { UserCard } from "../organisms/user/UserCard";
 import { UserDetailModal } from "../organisms/user/UserDetailModal";
 
 export const UserManagement: VFC = memo(() => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { getUsers, users, loading } = useAllUsers();
-  const { onSelectUser, selectedUser } = useSelectUser();
+  const { getUsers, users, loading } = UseAllUsers();
+  const { onSelectUser, selectedUser } = UseSelectUser();
   console.log(selectedUser);
 
   useEffect(() => getUsers, []);
