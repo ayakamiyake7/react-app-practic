@@ -11,24 +11,23 @@ export const useAuth = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const login = useCallback(
-    (id: string) => {
-      setLoading(true);
+  const login = useCallback((id: string) => {
+    setLoading(true);
 
-      axios
-        .get<User>(`https://jsonplaceholder.typicode.com/users/${id}`)
-        .then((res) => {
-          if (res.data) {
-            showMessage({ title: "We are done!", status: "success" });
-            history.push("/home");
-          } else {
-            showMessage({ title: "We cannot find you...", status: "error" });
-          }
-        })
-        .catch(() => 
-        showMessage({ title: "We cannot login...", status: "error" }));
-        .finally(() => setLoading(false));
-    },
-    []);
+    axios
+      .get<User>(`https://jsonplaceholder.typicode.com/users/${id}`)
+      .then((res) => {
+        if (res.data) {
+          showMessage({ title: "We are done!", status: "success" });
+          history.push("/home");
+        } else {
+          showMessage({ title: "We cannot find you...", status: "error" });
+        }
+      })
+      .catch(() =>
+        showMessage({ title: "We cannot login...", status: "error" })
+      )
+      .finally(() => setLoading(false));
+  }, []);
   return { login, loading };
 };
